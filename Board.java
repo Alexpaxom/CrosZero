@@ -1,18 +1,20 @@
 class Board
 {
-	public static final int X_SIZE = 5;
-	public static final int Y_SIZE = 5;
-	
-	public static final Player PLAYERS[] = {new Player('-'), new Player('X'), new Player('O')};
+	private Player PLAYERS[];
 	private Player board[][];
-	BoardCalculator boardCalc = new BoardCalculator(X_SIZE, Y_SIZE, PLAYERS);
-	private boolean weightCalc = false;
-	private int boardWeight = 0;
+
+	public int x_size = 0;
+	public int y_size = 0;
 	
 	
-	Board()
+	Board(int x_size, int y_size, Player players[])
 	{
-		board = new Player[X_SIZE][Y_SIZE];
+		this.x_size = x_size;
+		this.y_size = y_size;
+		
+		board = new Player[this.x_size][this.y_size];
+		PLAYERS = players;
+		
 		for(int x = 0; x < board.length; ++x)
 		{
 			for(int y = 0; y < board[x].length; ++y)
@@ -20,7 +22,6 @@ class Board
 				board[x][y] = PLAYERS[0];
 			}
 		}
-		weightCalc = false;
 	}
 	
 	public void print()
@@ -35,26 +36,24 @@ class Board
 		}
 	}
 	
-	public void setPlayer(int x_pos, int y_pos, int playerId)
+	public void setElement(int x_pos, int y_pos, int playerId)
 	{
-		weightCalc = false;
-		
 		board[x_pos][y_pos] = PLAYERS[playerId];
 	}
 	
-	public Player getPlayer(int x_pos, int y_pos)
+	public Player getElement(int x_pos, int y_pos)
 	{
 		return board[x_pos][y_pos];
 	}
 	
-	public void calcWeight()
-	{
-		boardWeight = boardCalc.calcWeight(board, PLAYERS[1]);
-		weightCalc = true;
-	}
 	
-	public int getWeight()
+	public Player[][] getBoard()
 	{
-		return boardWeight;
+		return board;
+	}
+
+	public Player[] getPlayers()
+	{
+		return PLAYERS;
 	}
 }
